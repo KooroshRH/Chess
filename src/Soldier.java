@@ -1,2 +1,2 @@
-public class Soldier extends Bead {
+public class Soldier extends Piece {
 }

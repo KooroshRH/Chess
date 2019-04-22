@@ -1,4 +1,4 @@
-abstract class Bead {
+abstract class Piece {
     char width;
     char height;
     boolean isIn;

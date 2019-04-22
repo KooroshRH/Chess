@@ -1,2 +1,2 @@
-public class King extends Bead {
+public class King extends Piece {
 }

@@ -1,2 +1,2 @@
-public class Rook extends Bead {
+public class Rook extends Piece {
 }

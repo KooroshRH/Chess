@@ -1,2 +1,3 @@
-public class Horse extends Bead {
+public class Horse extends Piece {
+
 }
