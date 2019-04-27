@@ -6,6 +6,11 @@ public class Rook extends Piece {
 
     @Override
     boolean move(int width, int height, char[][] map) {
-        return false;
+        if ((this.width == width && height != this.height) || (this.height == height && width != this.width)){
+            return isMoving(width, height, map);
+        } else {
+            System.out.println("This piece can't move to your selected place!!");
+            return false;
+        }
     }
 }

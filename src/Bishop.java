@@ -6,6 +6,11 @@ public class Bishop extends Piece {
 
     @Override
     boolean move(int width, int height, char[][] map) {
-        return false;
+        if (Math.abs(this.width-this.height) == Math.abs(width-height)){
+            return isMoving(width, height, map);
+        } else {
+            System.out.println("This piece can't move to your selected place!!");
+            return false;
+        }
     }
 }

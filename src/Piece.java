@@ -27,6 +27,27 @@ abstract class Piece {
         isIn = in;
     }
 
+    public boolean isMoving(int width, int height, char[][] map){
+        if (map[height][width] == '0'){
+            map[this.height][this.width] = '0';
+            map[height][width] = color;
+            return true;
+        } else if (map[height][width] != '0' && map[height][width] == color){
+            System.out.println("This place is filled by your own piece!!");
+            return false;
+        } else {
+            for (Piece piece : pieces) {
+                if (piece.getHeight() == height && piece.getWidth() == width) {
+                    piece.setIn(false);
+                }
+            }
+            System.out.println("You hit the enemy piece!!");
+            map[this.height][this.width] = '0';
+            map[height][width] = color;
+            return true;
+        }
+    }
+
     abstract boolean move(int width, int height, char[][] map);
 
 }
