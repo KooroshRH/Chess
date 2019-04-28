@@ -4,6 +4,8 @@ public class Game {
     public void play(){
         printInstruction();
         printMap();
+        makePieces('W');
+        makePieces('B');
     }
 
     private void printInstruction(){
@@ -30,6 +32,46 @@ public class Game {
                 System.out.print("|_");
             }
             System.out.println("|" + (8-i));
+        }
+    }
+
+    private void makePieces(char color){
+        if (color == 'B') {
+            for (int i = 1; i <= 8; i++) {
+                Piece piece = new Soldier(i, 7, true, color, i);
+            }
+            {
+                Piece piece1 = new Rook(1, 8, true, color, 9);
+                Piece piece2 = new Rook(8, 8, true, color, 16);
+            }
+            {
+                Piece piece1 = new Horse(2, 8, true, color, 10);
+                Piece piece2 = new Horse(7, 8, true, color, 15);
+            }
+            {
+                Piece piece1 = new Bishop(3, 8, true, color, 11);
+                Piece piece2 = new Bishop(6, 8, true, color, 14);
+            }
+            Piece piece1 = new Queen(4, 8, true, color, 12);
+            Piece piece2 = new King(5, 8, true, color, 13);
+        } else {
+            for (int i = 1; i <= 8; i++) {
+                Piece piece = new Soldier(i, 2, true, color, i);
+            }
+            {
+                Piece piece1 = new Rook(1, 2, true, color, 9);
+                Piece piece2 = new Rook(8, 2, true, color, 16);
+            }
+            {
+                Piece piece1 = new Horse(2, 2, true, color, 10);
+                Piece piece2 = new Horse(7, 2, true, color, 15);
+            }
+            {
+                Piece piece1 = new Bishop(3, 2, true, color, 11);
+                Piece piece2 = new Bishop(6, 2, true, color, 14);
+            }
+            Piece piece1 = new Queen(4, 2, true, color, 12);
+            Piece piece2 = new King(5, 2, true, color, 13);
         }
     }
 }
