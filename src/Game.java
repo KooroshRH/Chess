@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
@@ -7,6 +8,8 @@ public class Game {
         printMap();
         makePieces('W');
         makePieces('B');
+        char[][] map = new char[8][8];
+        mapMaker(map, Piece.getPieces());
         int paces = 0;
         while (true){
             char color;
@@ -26,6 +29,11 @@ public class Game {
                     break;
                 }
             }
+            printMap();
+            System.out.println("Now enter the place that you want to go to(for example 'a3'): ");
+            String str = input.nextLine();
+            int width = str.charAt(0) - 96;
+            int height = str.charAt(1) - 96;
             piece.move();
             paces++;
         }
@@ -83,6 +91,17 @@ public class Game {
             new Bishop(6, 2, true, color, 14);
             new Queen(4, 2, true, color, 12);
             new King(5, 2, true, color, 13);
+        }
+    }
+
+    public void mapMaker(char[][] map, ArrayList<Piece> pieces){
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                map[j][i] = '0';
+            }
+        }
+        for (Piece piece : pieces){
+            map[piece.getHeight()][piece.getWidth()] = piece.getColor();
         }
     }
 }
