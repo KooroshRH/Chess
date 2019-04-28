@@ -33,11 +33,17 @@ abstract class Piece {
         isIn = in;
     }
 
+    private boolean correctMove(int width, int height, char[][] map){
+        map[this.height][this.width] = '0';
+        map[height][width] = color;
+        this.height = height;
+        this.width = width;
+        return true;
+    }
+
     public boolean isMoving(int width, int height, char[][] map){
         if (map[height][width] == '0'){
-            map[this.height][this.width] = '0';
-            map[height][width] = color;
-            return true;
+            return correctMove(width, height, map);
         } else if (map[height][width] != '0' && map[height][width] == color){
             System.out.println("This place is filled by your own piece!!");
             return false;
@@ -48,9 +54,7 @@ abstract class Piece {
                 }
             }
             System.out.println("You hit the enemy piece!!");
-            map[this.height][this.width] = '0';
-            map[height][width] = color;
-            return true;
+            return correctMove(width, height, map);
         }
     }
 
