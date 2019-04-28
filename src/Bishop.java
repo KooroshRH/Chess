@@ -1,7 +1,7 @@
 public class Bishop extends Piece {
 
-    public Bishop(int width, int height, boolean isIn, char color) {
-        super(width, height, isIn, color);
+    public Bishop(int width, int height, boolean isIn, char color, int ID) {
+        super(width, height, isIn, color, ID);
     }
 
     @Override

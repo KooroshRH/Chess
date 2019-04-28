@@ -1,7 +1,7 @@
 public class Rook extends Piece {
 
-    public Rook(int width, int height, boolean isIn, char color) {
-        super(width, height, isIn, color);
+    public Rook(int width, int height, boolean isIn, char color, int ID) {
+        super(width, height, isIn, color, ID);
     }
 
     @Override

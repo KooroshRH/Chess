@@ -1,18 +1,24 @@
 import java.util.ArrayList;
 
 abstract class Piece {
+    protected int ID;
     protected int width;
     protected int height;
     protected boolean isIn;
     protected char color;
     protected static ArrayList<Piece> pieces = new ArrayList<>();
 
-    public Piece(int width, int height, boolean isIn, char color) {
+    public Piece(int width, int height, boolean isIn, char color, int ID) {
         this.width = width;
         this.height = height;
         this.isIn = isIn;
         this.color = color;
+        this.ID = ID;
         pieces.add(this);
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public int getWidth() {
