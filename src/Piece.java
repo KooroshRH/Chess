@@ -17,6 +17,14 @@ abstract class Piece {
         pieces.add(this);
     }
 
+    public char getColor() {
+        return color;
+    }
+
+    public static ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
     public int getID() {
         return ID;
     }

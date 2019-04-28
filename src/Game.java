@@ -2,10 +2,33 @@ import java.util.Scanner;
 
 public class Game {
     public void play(){
+        Scanner input = new Scanner(System.in);
         printInstruction();
         printMap();
         makePieces('W');
         makePieces('B');
+        int paces = 0;
+        while (true){
+            char color;
+            if (paces%2 == 0){
+                System.out.println("It's white turn");
+                color = 'W';
+            } else {
+                System.out.println("It's black turn");
+                color = 'B';
+            }
+            System.out.print("Which piece do you want to move?(Enter ID): ");
+            int ID = input.nextInt();
+            Piece piece = null;
+            for (Piece piece1 : Piece.getPieces()){
+                if (color == piece1.getColor() && ID == piece1.getID()){
+                    piece = piece1;
+                    break;
+                }
+            }
+            piece.move();
+            paces++;
+        }
     }
 
     private void printInstruction(){
@@ -26,7 +49,7 @@ public class Game {
     }
 
     private void printMap(){
-        System.out.println(" A B C D E F G H ");
+        System.out.println(" a b c d e f g h ");
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 System.out.print("|_");
@@ -38,40 +61,28 @@ public class Game {
     private void makePieces(char color){
         if (color == 'B') {
             for (int i = 1; i <= 8; i++) {
-                Piece piece = new Soldier(i, 7, true, color, i);
+                new Soldier(i, 7, true, color, i);
             }
-            {
-                Piece piece1 = new Rook(1, 8, true, color, 9);
-                Piece piece2 = new Rook(8, 8, true, color, 16);
-            }
-            {
-                Piece piece1 = new Horse(2, 8, true, color, 10);
-                Piece piece2 = new Horse(7, 8, true, color, 15);
-            }
-            {
-                Piece piece1 = new Bishop(3, 8, true, color, 11);
-                Piece piece2 = new Bishop(6, 8, true, color, 14);
-            }
-            Piece piece1 = new Queen(4, 8, true, color, 12);
-            Piece piece2 = new King(5, 8, true, color, 13);
+            new Rook(1, 8, true, color, 9);
+            new Rook(8, 8, true, color, 16);
+            new Horse(2, 8, true, color, 10);
+            new Horse(7, 8, true, color, 15);
+            new Bishop(3, 8, true, color, 11);
+            new Bishop(6, 8, true, color, 14);
+            new Queen(4, 8, true, color, 12);
+            new King(5, 8, true, color, 13);
         } else {
             for (int i = 1; i <= 8; i++) {
-                Piece piece = new Soldier(i, 2, true, color, i);
+                new Soldier(i, 2, true, color, i);
             }
-            {
-                Piece piece1 = new Rook(1, 2, true, color, 9);
-                Piece piece2 = new Rook(8, 2, true, color, 16);
-            }
-            {
-                Piece piece1 = new Horse(2, 2, true, color, 10);
-                Piece piece2 = new Horse(7, 2, true, color, 15);
-            }
-            {
-                Piece piece1 = new Bishop(3, 2, true, color, 11);
-                Piece piece2 = new Bishop(6, 2, true, color, 14);
-            }
-            Piece piece1 = new Queen(4, 2, true, color, 12);
-            Piece piece2 = new King(5, 2, true, color, 13);
+            new Rook(1, 2, true, color, 9);
+            new Rook(8, 2, true, color, 16);
+            new Horse(2, 2, true, color, 10);
+            new Horse(7, 2, true, color, 15);
+            new Bishop(3, 2, true, color, 11);
+            new Bishop(6, 2, true, color, 14);
+            new Queen(4, 2, true, color, 12);
+            new King(5, 2, true, color, 13);
         }
     }
 }
