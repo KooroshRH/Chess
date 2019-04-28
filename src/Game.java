@@ -2,13 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
+    private char[][] map = new char[8][8];
     public void play(){
         Scanner input = new Scanner(System.in);
         printInstruction();
-        printMap();
         makePieces('W');
         makePieces('B');
-        char[][] map = new char[8][8];
         mapMaker(map, Piece.getPieces());
         int paces = 0;
         while (true){
@@ -20,6 +19,7 @@ public class Game {
                 System.out.println("It's black turn");
                 color = 'B';
             }
+            printMap();
             System.out.print("Which piece do you want to move?(Enter ID): ");
             int ID = input.nextInt();
             Piece piece = null;
@@ -29,12 +29,15 @@ public class Game {
                     break;
                 }
             }
-            printMap();
             System.out.println("Now enter the place that you want to go to(for example 'a3'): ");
+            input.nextLine();
             String str = input.nextLine();
             int width = str.charAt(0) - 96;
-            int height = str.charAt(1) - 96;
-            piece.move();
+            int height = Integer.parseInt("" + str.charAt(1));
+            if (!piece.move(width, height, map)){
+                System.out.println("You must choose another time");
+                continue;
+            }
             paces++;
         }
     }
@@ -60,9 +63,9 @@ public class Game {
         System.out.println(" a b c d e f g h ");
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
-                System.out.print("|_");
+                System.out.print("|" + map[i][j]);
             }
-            System.out.println("|" + (8-i));
+            System.out.println("|" + (i+1));
         }
     }
 
@@ -83,14 +86,14 @@ public class Game {
             for (int i = 1; i <= 8; i++) {
                 new Soldier(i, 2, true, color, i);
             }
-            new Rook(1, 2, true, color, 9);
-            new Rook(8, 2, true, color, 16);
-            new Horse(2, 2, true, color, 10);
-            new Horse(7, 2, true, color, 15);
-            new Bishop(3, 2, true, color, 11);
-            new Bishop(6, 2, true, color, 14);
-            new Queen(4, 2, true, color, 12);
-            new King(5, 2, true, color, 13);
+            new Rook(1, 1, true, color, 9);
+            new Rook(8, 1, true, color, 16);
+            new Horse(2, 1, true, color, 10);
+            new Horse(7, 1, true, color, 15);
+            new Bishop(3, 1, true, color, 11);
+            new Bishop(6, 1, true, color, 14);
+            new Queen(4, 1, true, color, 12);
+            new King(5, 1, true, color, 13);
         }
     }
 
@@ -101,7 +104,7 @@ public class Game {
             }
         }
         for (Piece piece : pieces){
-            map[piece.getHeight()][piece.getWidth()] = piece.getColor();
+            map[piece.getHeight()-1][piece.getWidth()-1] = piece.getColor();
         }
     }
 }

@@ -42,17 +42,32 @@ abstract class Piece {
     }
 
     private boolean correctMove(int width, int height, char[][] map){
-        map[this.height][this.width] = '0';
-        map[height][width] = color;
+        map[this.height-1][this.width-1] = '0';
+        map[height-1][width-1] = color;
         this.height = height;
         this.width = width;
         return true;
     }
 
+    public boolean wayKeeper(int width, int height, char[][] map){
+        int widthRatio = Integer.compare(width, this.width);
+        int heightRatio = Integer.compare(height, this.height);
+        int tmpWidth = this.width + widthRatio, tmpHeight = this.height + heightRatio;
+        while (tmpHeight != height || tmpWidth != width){
+            if (map[tmpHeight-1][tmpWidth-1] == color){
+                System.out.println("The way is blocked by your own piece!!");
+                return false;
+            }
+            tmpHeight++;
+            tmpWidth++;
+        }
+        return true;
+    }
+
     public boolean isMoving(int width, int height, char[][] map){
-        if (map[height][width] == '0'){
+        if (map[height-1][width-1] == '0'){
             return correctMove(width, height, map);
-        } else if (map[height][width] != '0' && map[height][width] == color){
+        } else if (map[height-1][width-1] != '0' && map[height-1][width-1] == color){
             System.out.println("This place is filled by your own piece!!");
             return false;
         } else {
@@ -61,7 +76,7 @@ abstract class Piece {
                     piece.setIn(false);
                 }
             }
-            System.out.println("You hit the enemy piece!!");
+            System.out.println("You hit the enemy's piece!!");
             return correctMove(width, height, map);
         }
     }
