@@ -42,7 +42,6 @@ public class Soldier extends Piece {
                 if (map[height-1][width-1] == 'W' && (this.height-height == 1 && (Math.abs(this.width-width) == 1))) {
                     return isMoving(width, height, map);
                 } else {
-                    System.out.println(54);
                     System.out.println("This piece can't move to your selected place!!");
                     return false;
                 }
