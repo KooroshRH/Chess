@@ -58,8 +58,8 @@ abstract class Piece {
                 System.out.println("The way is blocked by your own piece!!");
                 return false;
             }
-            tmpHeight++;
-            tmpWidth++;
+            tmpHeight += heightRatio;
+            tmpWidth += widthRatio;
         }
         return true;
     }
