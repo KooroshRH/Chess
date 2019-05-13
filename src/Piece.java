@@ -55,6 +55,9 @@ abstract class Piece extends JButton {
         int heightRatio = Integer.compare(height, this.height);
         int tmpWidth = this.width + widthRatio, tmpHeight = this.height + heightRatio;
         while (tmpHeight != height || tmpWidth != width){
+            if (tmpHeight == 0 || tmpWidth == 0){
+                break;
+            }
             if (map[tmpHeight-1][tmpWidth-1] == color){
                 if (print) {
                     System.out.println("The way is blocked by your own piece!!");
@@ -84,6 +87,6 @@ abstract class Piece extends JButton {
         }
     }
 
-    abstract boolean move(int width, int height, char[][] map);
+    abstract boolean move(int width, int height, char[][] map, boolean move);
 
 }

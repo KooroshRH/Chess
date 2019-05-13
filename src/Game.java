@@ -42,7 +42,11 @@ public class Game {
             String str = input.nextLine();
             int width = str.charAt(0) - 96;
             int height = Integer.parseInt("" + str.charAt(1));
-            if (!piece.move(width, height, map)){
+            if (!piece.move(width, height, map, true)){
+                if (piece.getClass().getName().equals("King")){
+                    System.out.println("GAME OVER");
+                    return;
+                }
                 System.out.println("You must choose another time");
                 continue;
             }

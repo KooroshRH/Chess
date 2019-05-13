@@ -5,11 +5,17 @@ public class Horse extends Piece {
     }
 
     @Override
-    boolean move(int width, int height, char[][] map) {
+    boolean move(int width, int height, char[][] map, boolean move) {
         if ((Math.abs(width - this.width) == 2 && Math.abs(height - this.height) == 1) || (Math.abs(width - this.width) == 1 && Math.abs(height - this.height) == 2)){
-            return isMoving(width, height, map);
+            if (move) {
+                return isMoving(width, height, map);
+            } else {
+                return true;
+            }
         } else {
-            System.out.println("This piece can't move to your selected place!!");
+            if (move) {
+                System.out.println("This piece can't move to your selected place!!");
+            }
             return false;
         }
     }
