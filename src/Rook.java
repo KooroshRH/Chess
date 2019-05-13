@@ -7,7 +7,7 @@ public class Rook extends Piece {
     @Override
     boolean move(int width, int height, char[][] map) {
         if ((this.width == width && height != this.height) || (this.height == height && width != this.width)){
-            if (!wayKeeper(width, height, map)){
+            if (!wayKeeper(width, height, map, true)){
                 return false;
             }
             return isMoving(width, height, map);

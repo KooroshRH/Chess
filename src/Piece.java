@@ -1,6 +1,7 @@
+import javax.swing.*;
 import java.util.ArrayList;
 
-abstract class Piece {
+abstract class Piece extends JButton {
     protected int ID;
     protected int width;
     protected int height;
@@ -49,13 +50,15 @@ abstract class Piece {
         return true;
     }
 
-    public boolean wayKeeper(int width, int height, char[][] map){
+    public boolean wayKeeper(int width, int height, char[][] map, boolean print){
         int widthRatio = Integer.compare(width, this.width);
         int heightRatio = Integer.compare(height, this.height);
         int tmpWidth = this.width + widthRatio, tmpHeight = this.height + heightRatio;
         while (tmpHeight != height || tmpWidth != width){
             if (map[tmpHeight-1][tmpWidth-1] == color){
-                System.out.println("The way is blocked by your own piece!!");
+                if (print) {
+                    System.out.println("The way is blocked by your own piece!!");
+                }
                 return false;
             }
             tmpHeight += heightRatio;

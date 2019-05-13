@@ -7,7 +7,7 @@ public class Bishop extends Piece {
     @Override
     boolean move(int width, int height, char[][] map) {
         if (Math.abs(this.width-this.height) == Math.abs(width-height)){
-            if (!wayKeeper(width, height, map)){
+            if (!wayKeeper(width, height, map, true)){
                 return false;
             }
             return isMoving(width, height, map);

@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class King extends Piece {
 
     public King(int width, int height, boolean isIn, char color, int ID) {
@@ -5,7 +7,12 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean wayKeeper(int width, int height, char[][] map){
+        
+    }
+
+    @Override
     boolean move(int width, int height, char[][] map) {
-        return false;
+
     }
 }

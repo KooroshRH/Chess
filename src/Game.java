@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,6 +8,12 @@ public class Game {
     public void play(){
         Scanner input = new Scanner(System.in);
         printInstruction();
+//        JFrame mainFrame = new JFrame("Chess");
+//        mainFrame.setSize(600, 600);
+//        mainFrame.setResizable(false);
+//        JPanel mainPanel = new JPanel();
+//        mainFrame.setLayout(new BorderLayout());
+//        mainFrame.getContentPane().add(mainPanel);
         makePieces('W');
         makePieces('B');
         mapMaker(map, Piece.getPieces());
