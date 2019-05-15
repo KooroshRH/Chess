@@ -1,14 +1,19 @@
-import javax.swing.*;
-
+/**
+ * A type of piece that extends the Piece class
+ *
+ * @author Korosh Roohi
+ * @version 1.0.0
+ * @since 2019.5.13
+ */
 public class King extends Piece {
 
-    public King(int width, int height, boolean isIn, char color, int ID) {
-        super(width, height, isIn, color, ID);
+    public King(int myWidth, int myHeight, boolean isIn, char color, int ID) {
+        super(myWidth, myHeight, isIn, color, ID);
     }
 
     @Override
     boolean move(int width, int height, char[][] map, boolean move) {
-        if (Math.abs(this.width - width) <= 1 && Math.abs(this.height - height) <= 1){
+        if (Math.abs(this.myWidth - width) <= 1 && Math.abs(this.myHeight - height) <= 1){
             for (Piece piece : pieces){
                 System.out.println(piece.getID());
                 System.out.println(piece.color);

@@ -1,12 +1,19 @@
+/**
+ * A type of piece that extends the Piece class
+ *
+ * @author Korosh Roohi
+ * @version 1.0.0
+ * @since 2019.5.13
+ */
 public class Rook extends Piece {
 
-    public Rook(int width, int height, boolean isIn, char color, int ID) {
-        super(width, height, isIn, color, ID);
+    public Rook(int myWidth, int myHeight, boolean isIn, char color, int ID) {
+        super(myWidth, myHeight, isIn, color, ID);
     }
 
     @Override
     boolean move(int width, int height, char[][] map, boolean move) {
-        if ((this.width == width && height != this.height) || (this.height == height && width != this.width)){
+        if ((this.myWidth == width && height != this.myHeight) || (this.myHeight == height && width != this.myWidth)){
             if (!wayKeeper(width, height, map, true)){
                 return false;
             }

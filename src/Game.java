@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,8 +12,8 @@ public class Game {
 //        JPanel mainPanel = new JPanel();
 //        mainFrame.setLayout(new BorderLayout());
 //        mainFrame.getContentPane().add(mainPanel);
-        makePieces('W');
-        makePieces('B');
+//        makePieces('W');
+//        makePieces('B');
         mapMaker(map, Piece.getPieces());
         int paces = 0;
         while (true){
@@ -81,33 +79,33 @@ public class Game {
         }
     }
 
-    private void makePieces(char color){
-        if (color == 'B') {
-            for (int i = 1; i <= 8; i++) {
-                new Soldier(i, 7, true, color, i);
-            }
-            new Rook(1, 8, true, color, 9);
-            new Rook(8, 8, true, color, 16);
-            new Horse(2, 8, true, color, 10);
-            new Horse(7, 8, true, color, 15);
-            new Bishop(3, 8, true, color, 11);
-            new Bishop(6, 8, true, color, 14);
-            new Queen(4, 8, true, color, 12);
-            new King(5, 8, true, color, 13);
-        } else {
-            for (int i = 1; i <= 8; i++) {
-                new Soldier(i, 2, true, color, i);
-            }
-            new Rook(1, 1, true, color, 9);
-            new Rook(8, 1, true, color, 16);
-            new Horse(2, 1, true, color, 10);
-            new Horse(7, 1, true, color, 15);
-            new Bishop(3, 1, true, color, 11);
-            new Bishop(6, 1, true, color, 14);
-            new Queen(4, 1, true, color, 12);
-            new King(5, 1, true, color, 13);
-        }
-    }
+//    private void makePieces(char color){
+//        if (color == 'B') {
+//            for (int i = 1; i <= 8; i++) {
+//                new Soldier(i, 7, true, color, i);
+//            }
+//            new Rook(1, 8, true, color, 9);
+//            new Rook(8, 8, true, color, 16);
+//            new Horse(2, 8, true, color, 10);
+//            new Horse(7, 8, true, color, 15);
+//            new Bishop(3, 8, true, color, 11);
+//            new Bishop(6, 8, true, color, 14);
+//            new Queen(4, 8, true, color, 12);
+//            new King(5, 8, true, color, 13);
+//        } else {
+//            for (int i = 1; i <= 8; i++) {
+//                new Soldier(i, 2, true, color, i);
+//            }
+//            new Rook(1, 1, true, color, 9);
+//            new Rook(8, 1, true, color, 16);
+//            new Horse(2, 1, true, color, 10);
+//            new Horse(7, 1, true, color, 15);
+//            new Bishop(3, 1, true, color, 11);
+//            new Bishop(6, 1, true, color, 14);
+//            new Queen(4, 1, true, color, 12);
+//            new King(5, 1, true, color, 13);
+//        }
+//    }
 
     public void mapMaker(char[][] map, ArrayList<Piece> pieces){
         for (int i = 0; i < 8; i++){
@@ -116,7 +114,7 @@ public class Game {
             }
         }
         for (Piece piece : pieces){
-            map[piece.getHeight()-1][piece.getWidth()-1] = piece.getColor();
+            map[piece.getMyHeight()-1][piece.getMyWidth()-1] = piece.getColor();
         }
     }
 }
