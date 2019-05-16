@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * A type of piece that extends Piece class
  *
@@ -14,7 +16,7 @@ public class Soldier extends Piece {
     }
 
     @Override
-    boolean move(int width, int height, char[][] map, boolean move) {
+    boolean move(int width, int height, JButton[][] map, boolean move) {
         if (color == 'W') {
             if (width == this.myWidth) {
                 if (height - this.myHeight == 2 && isFirst) {
@@ -37,7 +39,7 @@ public class Soldier extends Piece {
                     return false;
                 }
             } else {
-                if (map[height - 1][width - 1] == 'B' && (height - this.myHeight == 1 && (Math.abs(this.myWidth - width) == 1))) {
+                if (map[height][width] instanceof Piece && ((Piece)map[height][width]).getColor() == 'B' && (height - this.myHeight == 1 && (Math.abs(this.myWidth - width) == 1))) {
                     if (move) {
                         return isMoving(width, height, map);
                     } else {
@@ -72,7 +74,7 @@ public class Soldier extends Piece {
                     return false;
                 }
             } else {
-                if (map[height - 1][width - 1] == 'W' && (this.myHeight - height == 1 && (Math.abs(this.myWidth - width) == 1))) {
+                if (map[height][width] instanceof Piece && ((Piece)map[height][width]).getColor() == 'W' && (this.myHeight - height == 1 && (Math.abs(this.myWidth - width) == 1))) {
                     if (move) {
                         return isMoving(width, height, map);
                     } else {

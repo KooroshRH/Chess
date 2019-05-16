@@ -61,11 +61,10 @@ abstract class Piece extends JButton {
      * @param map map that pieces are there
      * @return a boolean that indicate if the piece moved or not
      */
-    private boolean correctMove(int width, int height, char[][] map){
-        map[this.myHeight -1][this.myWidth -1] = '0';
-        map[height-1][width-1] = color;
-        this.myHeight = height;
-        this.myWidth = width;
+    private boolean correctMove(int width, int height, JButton[][] map){
+        JButton tmpButton = map[this.myHeight][this.myWidth];
+        map[this.myHeight][this.myWidth] = map[height][width];
+        map[height][width] = tmpButton;
         return true;
     }
 
@@ -78,15 +77,15 @@ abstract class Piece extends JButton {
      * @param print a boolean for printing or not
      * @return a boolean that indicate if the piece moved or not
      */
-    public boolean wayKeeper(int width, int height, char[][] map, boolean print){
+    public boolean wayKeeper(int width, int height, JButton[][] map, boolean print){
         int widthRatio = Integer.compare(width, this.myWidth);
         int heightRatio = Integer.compare(height, this.myHeight);
         int tmpWidth = this.myWidth + widthRatio, tmpHeight = this.myHeight + heightRatio;
-        while (tmpHeight != height || tmpWidth != width){
+        while (tmpHeight != height-1 || tmpWidth != width-1){
             if (tmpHeight == 0 || tmpWidth == 0){
                 break;
             }
-            if (map[tmpHeight-1][tmpWidth-1] == color){
+            if (map[tmpHeight][tmpWidth] instanceof Piece){
                 if (print) {
                     System.out.println("The way is blocked by your own piece!!");
                 }
@@ -106,15 +105,16 @@ abstract class Piece extends JButton {
      * @param map map that pieces are there
      * @return a boolean that indicate if the piece moved or not
      */
-    public boolean isMoving(int width, int height, char[][] map){
-        if (map[height-1][width-1] == '0'){
+    public boolean isMoving(int width, int height, JButton[][] map){
+        if (!(map[height][width] instanceof Piece)){
             return correctMove(width, height, map);
-        } else if (map[height-1][width-1] != '0' && map[height-1][width-1] == color){
+        } else if (map[height][width] instanceof Piece && ((Piece)map[height][width]).getColor() == color){
             System.out.println("This place is filled by your own piece!!");
             return false;
         } else {
             for (Piece piece : pieces) {
                 if (piece.getMyHeight() == height && piece.getMyWidth() == width) {
+                    map[height][width].setIcon(null);
                     piece.setIn(false);
                 }
             }
@@ -132,6 +132,6 @@ abstract class Piece extends JButton {
      * @param move move piece or not
      * @return a boolean that indicate if the piece moved or not
      */
-    abstract boolean move(int width, int height, char[][] map, boolean move);
+    abstract boolean move(int width, int height, JButton[][] map, boolean move);
 
 }

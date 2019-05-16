@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * A type of piece that extends the Piece class
  *
@@ -12,7 +14,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    boolean move(int width, int height, char[][] map, boolean move) {
+    boolean move(int width, int height, JButton[][] map, boolean move) {
         if (Math.abs(this.myWidth -this.myHeight) == Math.abs(width-height)){
             if (!wayKeeper(width, height, map, true)){
                 return false;

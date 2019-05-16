@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * A type of piece that extends the Piece class
  *
@@ -12,7 +14,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean move(int width, int height, char[][] map, boolean move) {
+    boolean move(int width, int height, JButton[][] map, boolean move) {
         if (Math.abs(this.myWidth - width) <= 1 && Math.abs(this.myHeight - height) <= 1){
             for (Piece piece : pieces){
                 System.out.println(piece.getID());

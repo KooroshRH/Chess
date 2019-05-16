@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * A type of piece that extends the Piece class
  *
@@ -12,7 +14,7 @@ public class Horse extends Piece {
     }
 
     @Override
-    boolean move(int width, int height, char[][] map, boolean move) {
+    boolean move(int width, int height, JButton[][] map, boolean move) {
         if ((Math.abs(width - this.myWidth) == 2 && Math.abs(height - this.myHeight) == 1) || (Math.abs(width - this.myWidth) == 1 && Math.abs(height - this.myHeight) == 2)){
             if (move) {
                 return isMoving(width, height, map);
