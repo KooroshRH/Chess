@@ -1,10 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
 
 public class Graphic {
@@ -41,13 +37,15 @@ public class Graphic {
             map[piece.getMyHeight()-1][piece.getMyWidth()-1] = piece;
         }
         for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++) {
-                JButton btt;
-                if (map[i][j] != null){
-                    btt = map[i][j];
-                } else {
-                    btt = new JButton();
+            for (int j = 0; j < 8; j++){
+                if (!(map[i][j] instanceof Piece)){
+                    map[i][j] = new JButton();
                 }
+            }
+        }
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++) {
+                JButton btt = map[i][j];
                 btt.setFocusable(false);
                 if ((i + j)%2 == 0){
                     btt.setBackground(Color.WHITE);
