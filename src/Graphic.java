@@ -43,18 +43,7 @@ public class Graphic {
                 }
             }
         }
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++) {
-                JButton btt = map[i][j];
-                btt.setFocusable(false);
-                if ((i + j)%2 == 0){
-                    btt.setBackground(Color.WHITE);
-                } else {
-                    btt.setBackground(Color.darkGray);
-                }
-                mainPanel.add(btt);
-            }
-        }
+        paint(map, mainPanel);
         mainFrame.setVisible(true);
     }
 
@@ -83,6 +72,21 @@ public class Graphic {
             new Bishop(6, 1, true, color, 14);
             new Queen(4, 1, true, color, 12);
             new King(5, 1, true, color, 13);
+        }
+    }
+
+    private void paint(JButton[][] map, JPanel mainPanel){
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++) {
+                JButton btt = map[i][j];
+                btt.setFocusable(false);
+                if ((i + j)%2 == 0){
+                    btt.setBackground(Color.WHITE);
+                } else {
+                    btt.setBackground(Color.darkGray);
+                }
+                mainPanel.add(btt);
+            }
         }
     }
 }
