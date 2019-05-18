@@ -19,7 +19,7 @@ public class Graphic implements MouseListener {
         mainPanel = new JPanel();
         map = new JButton[8][8];
         clicked = false;
-        turn = 'W';
+        turn = 'B';
     }
 
     public void game(){
@@ -102,29 +102,46 @@ public class Graphic implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        boolean moved = false;
+        if (!clicked && !(e.getSource() instanceof Piece)){
+            System.out.println("nothing");
+            return;
+        }
         if (!clicked){
             System.out.println("first");
             if (((Piece)e.getSource()).getColor() == turn){
                 ((Piece) e.getSource()).setBackground(Color.GREEN);
                 clickedPiece = (Piece)e.getSource();
                 clicked = true;
+            } else {
+                System.out.println("not your turn");
             }
         } else {
+            boolean done = false;
             System.out.println("sec");
             JButton target = (JButton) e.getSource();
             for (int i = 0; i < 8; i++){
                 for (int j = 0; j < 8; j++){
                     if (map[i][j] == target){
+                        done = true;
                         System.out.println("secsec");
-                        clickedPiece.move(j, i, map, true);
+                        if (clickedPiece.move(j, i, map, true)){
+                            moved = true;
+                        }
                         paint(map, mainPanel);
+                        break;
                     }
                 }
+                if (done){
+                    break;
+                }
             }
-            if (turn == 'W'){
-                turn = 'B';
-            } else {
-                turn = 'W';
+            if (moved) {
+                if (turn == 'W') {
+                    turn = 'B';
+                } else {
+                    turn = 'W';
+                }
             }
             clickedPiece = null;
             clicked = false;
