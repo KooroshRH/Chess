@@ -121,34 +121,35 @@ public class Graphic implements MouseListener {
                 System.out.println("not your turn");
             }
         } else {
-            boolean done = false;
-            System.out.println("sec");
-            JButton target = (JButton) e.getSource();
-            for (int i = 0; i < 8; i++){
-                for (int j = 0; j < 8; j++){
-                    if (map[i][j] == target){
-                        done = true;
-                        System.out.println("secsec");
-                        if (clickedPiece.move(j, i, map, true)){
-                            moved = true;
-                        }
-                        paint(map, mainPanel);
-                        break;
-                    }
-                }
-                if (done){
-                    break;
-                }
-            }
-            if (moved) {
-                if (turn == 'W') {
-                    turn = 'B';
-                } else {
-                    turn = 'W';
-                }
-            }
-            clickedPiece = null;
-            clicked = false;
+
+//            boolean done = false;
+//            System.out.println("sec");
+//            JButton target = (JButton) e.getSource();
+//            for (int i = 0; i < 8; i++){
+//                for (int j = 0; j < 8; j++){
+//                    if (map[i][j] == target){
+//                        done = true;
+//                        System.out.println("secsec");
+//                        if (clickedPiece.move(j, i, map, true)){
+//                            moved = true;
+//                        }
+//                        paint(map, mainPanel);
+//                        break;
+//                    }
+//                }
+//                if (done){
+//                    break;
+//                }
+//            }
+//            if (moved) {
+//                if (turn == 'W') {
+//                    turn = 'B';
+//                } else {
+//                    turn = 'W';
+//                }
+//            }
+//            clickedPiece = null;
+//            clicked = false;
         }
     }
 
