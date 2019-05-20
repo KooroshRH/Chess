@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A type of piece that extends the Piece class
@@ -31,4 +33,11 @@ public class Bishop extends Piece {
             return false;
         }
     }
+
+    @Override
+    ArrayList<String> canWays(JButton[][] map) {
+        return null;
+    }
+
+
 }

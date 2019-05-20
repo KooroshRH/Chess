@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A type of piece that extends Piece class
@@ -89,4 +91,11 @@ public class Soldier extends Piece {
             }
         }
     }
+
+    @Override
+    ArrayList<String> canWays(JButton[][] map) {
+        return null;
+    }
+
+
 }

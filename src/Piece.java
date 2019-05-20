@@ -1,6 +1,7 @@
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A general class for chess pieces that extends JButton class
@@ -133,5 +134,5 @@ abstract class Piece extends JButton {
      * @return a boolean that indicate if the piece moved or not
      */
     abstract boolean move(int width, int height, JButton[][] map, boolean move);
-
+    abstract ArrayList<String> canWays(JButton[][] map);
 }
