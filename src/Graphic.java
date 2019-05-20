@@ -60,7 +60,7 @@ public class Graphic implements MouseListener {
             for (int i = 0; i < 8; i++) {
                 new Soldier(i, 6, true, color, i);
             }
-            new Rook(0, 7, true, color, 9);
+            new Rook(3, 3, true, color, 9);
             new Rook(7, 7, true, color, 16);
             new Horse(1, 7, true, color, 10);
             new Horse(6, 7, true, color, 15);
@@ -88,14 +88,13 @@ public class Graphic implements MouseListener {
         mainPanel.revalidate();
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++) {
-                JButton btt = map[i][j];
-                btt.setFocusable(false);
+                map[i][j].setFocusable(false);
                 if ((i + j)%2 == 0){
-                    btt.setBackground(Color.WHITE);
+                    map[i][j].setBackground(Color.WHITE);
                 } else {
-                    btt.setBackground(Color.darkGray);
+                    map[i][j].setBackground(Color.darkGray);
                 }
-                mainPanel.add(btt);
+                mainPanel.add(map[i][j]);
             }
         }
     }
@@ -112,6 +111,11 @@ public class Graphic implements MouseListener {
             if (((Piece)e.getSource()).getColor() == turn){
                 ((Piece) e.getSource()).setBackground(Color.GREEN);
                 clickedPiece = (Piece)e.getSource();
+                for (String place : ((Piece) e.getSource()).canWays(map)){
+                    int y = Integer.parseInt("" + place.charAt(0));
+                    int x = Integer.parseInt("" + place.charAt(1));
+                    map[y][x].setBackground(Color.RED);
+                }
                 clicked = true;
             } else {
                 System.out.println("not your turn");
