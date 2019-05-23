@@ -17,6 +17,10 @@ public class Soldier extends Piece {
         isFirst = true;
     }
 
+    public void setFirst(boolean first) {
+        isFirst = first;
+    }
+
     @Override
     boolean move(int width, int height, JButton[][] map, boolean move) {
         if (color == 'W') {
@@ -94,7 +98,40 @@ public class Soldier extends Piece {
 
     @Override
     ArrayList<String> canWays(JButton[][] map) {
-        return null;
+        if (this.color == 'W'){
+            if (isFirst){
+                for (int i = 1; i <= 2; i++){
+                    places.add("" + (this.myHeight+i) + (this.myWidth));
+                }
+            } else {
+                if (!(map[this.myHeight+1][this.myWidth] instanceof Piece)){
+                    places.add("" + (this.myHeight+1) + (this.myWidth));
+                }
+                if (map[this.myHeight+1][this.myWidth+1] instanceof  Piece && ((Piece) map[this.myHeight+1][this.myWidth+1]).getColor() != this.getColor()){
+                    places.add("" + (this.myHeight+1) + (this.myWidth+1));
+                }
+                if (map[this.myHeight+1][this.myWidth-1] instanceof  Piece && ((Piece) map[this.myHeight+1][this.myWidth-1]).getColor() != this.getColor()){
+                    places.add("" + (this.myHeight+1) + (this.myWidth-1));
+                }
+            }
+        } else {
+            if (isFirst){
+                for (int i = 1; i <= 2; i++){
+                    places.add("" + (this.myHeight-i) + (this.myWidth));
+                }
+            } else {
+                if (!(map[this.myHeight-1][this.myWidth] instanceof Piece)){
+                    places.add("" + (this.myHeight-1) + (this.myWidth));
+                }
+                if (map[this.myHeight-1][this.myWidth+1] instanceof  Piece && ((Piece) map[this.myHeight-1][this.myWidth+1]).getColor() != this.getColor()){
+                    places.add("" + (this.myHeight-1) + (this.myWidth+1));
+                }
+                if (map[this.myHeight-1][this.myWidth-1] instanceof  Piece && ((Piece) map[this.myHeight-1][this.myWidth-1]).getColor() != this.getColor()){
+                    places.add("" + (this.myHeight-1) + (this.myWidth-1));
+                }
+            }
+        }
+        return places;
     }
 
 

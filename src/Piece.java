@@ -16,6 +16,7 @@ abstract class Piece extends JButton {
     protected int myHeight;
     protected boolean isIn;
     protected char color;
+    protected ArrayList<String> places;
     protected static ArrayList<Piece> pieces = new ArrayList<>();
 
     public Piece(int myWidth, int myHeight, boolean isIn, char color, int ID) {
@@ -27,11 +28,15 @@ abstract class Piece extends JButton {
         this.ID = ID;
         setPreferredSize(new Dimension(100, 100));
         pieces.add(this);
-
+        places = new ArrayList<>();
     }
 
     public char getColor() {
         return color;
+    }
+
+    public ArrayList<String> getPlaces() {
+        return places;
     }
 
     public static ArrayList<Piece> getPieces() {
@@ -48,6 +53,14 @@ abstract class Piece extends JButton {
 
     public int getMyHeight() {
         return myHeight;
+    }
+
+    public void setMyWidth(int myWidth) {
+        this.myWidth = myWidth;
+    }
+
+    public void setMyHeight(int myHeight) {
+        this.myHeight = myHeight;
     }
 
     public void setIn(boolean in) {
@@ -122,6 +135,94 @@ abstract class Piece extends JButton {
             System.out.println("You hit the enemy's piece!!");
             return correctMove(width, height, map);
         }
+    }
+
+    protected ArrayList<String> tiltCheck(ArrayList<String> places, JButton[][] map){
+        for (int i = 1; this.myWidth+i < 8 && this.myHeight+i < 8; i++){
+            if (!(map[this.myHeight+i][this.myWidth+i] instanceof Piece) || ((Piece) map[this.myHeight+i][this.myWidth+i]).getColor() != this.getColor()){
+                places.add("" + (this.myHeight+i) + (this.myWidth+i));
+                if (map[this.myHeight+i][this.myWidth+i] instanceof Piece){
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        for (int i = 1; this.myWidth-i >= 0 && this.myHeight-i >= 0; i++){
+            if (!(map[this.myHeight-i][this.myWidth-i] instanceof Piece) || ((Piece) map[this.myHeight-i][this.myWidth-i]).getColor() != this.getColor()){
+                places.add("" + (this.myHeight-i) + (this.myWidth-i));
+                if (map[this.myHeight-i][this.myWidth-i] instanceof Piece){
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        for (int i = 1; this.myWidth+i < 8 && this.myHeight-i >= 0; i++){
+            if (!(map[this.myHeight-i][this.myWidth+i] instanceof Piece) || ((Piece) map[this.myHeight-i][this.myWidth+i]).getColor() != this.getColor()){
+                places.add("" + (this.myHeight-i) + (this.myWidth+i));
+                if (map[this.myHeight-i][this.myWidth+i] instanceof Piece){
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        for (int i = 1; this.myWidth-i >= 0 && this.myHeight+i < 8; i++){
+            if (!(map[this.myHeight+i][this.myWidth-i] instanceof Piece) || ((Piece) map[this.myHeight+i][this.myWidth-i]).getColor() != this.getColor()){
+                places.add("" + (this.myHeight+i) + (this.myWidth-i));
+                if (map[this.myHeight+i][this.myWidth-i] instanceof Piece){
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        return places;
+    }
+
+    protected ArrayList<String> linearCheck(ArrayList<String> places, JButton[][] map){
+        for (int i = 1; this.myHeight + i < 8; i++){
+            if (map[this.myHeight+i][this.myWidth] instanceof Piece && ((Piece)map[this.myHeight+i][this.myWidth]).getColor() == this.getColor()){
+                break;
+            } else {
+                places.add( "" + (this.myHeight+i) + this.myWidth);
+                if (map[this.myHeight+i][this.myWidth] instanceof Piece){
+                    break;
+                }
+            }
+        }
+        for (int i = 1; this.myHeight - i >= 0; i++){
+            if (map[this.myHeight-i][this.myWidth] instanceof Piece && ((Piece)map[this.myHeight-i][this.myWidth]).getColor() == this.getColor()){
+                break;
+            } else {
+                places.add( "" + (this.myHeight-i) + this.myWidth);
+                if (map[this.myHeight-i][this.myWidth] instanceof Piece){
+                    break;
+                }
+            }
+        }
+        for (int i = 1; this.myWidth + i < 8; i++){
+            if (map[this.myHeight][this.myWidth+i] instanceof Piece && ((Piece)map[this.myHeight][this.myWidth+i]).getColor() == this.getColor()){
+                break;
+            } else {
+                places.add( "" + this.myHeight + (this.myWidth+i));
+                if (map[this.myHeight][this.myWidth+i] instanceof Piece){
+                    break;
+                }
+            }
+        }
+        for (int i = 1; this.myWidth - i >= 0; i++){
+            if (map[this.myHeight][this.myWidth-i] instanceof Piece && ((Piece)map[this.myHeight][this.myWidth-i]).getColor() == this.getColor()){
+                break;
+            } else {
+                places.add("" +  this.myHeight + (this.myWidth-i) );
+                if (map[this.myHeight][this.myWidth-i] instanceof Piece){
+                    break;
+                }
+            }
+        }
+        return places;
     }
 
     /**

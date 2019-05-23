@@ -36,35 +36,6 @@ public class Rook extends Piece {
 
     @Override
     ArrayList<String> canWays(JButton[][] map) {
-        ArrayList<String> places = new ArrayList<>();
-        for (int i = 1; this.myHeight + i < 8; i++){
-            if (map[this.myHeight+i][this.myWidth] instanceof Piece && ((Piece)map[this.myHeight+i][this.myWidth]).getColor() == this.getColor()){
-                break;
-            } else {
-                places.add( "" + (this.myHeight+i) + this.myWidth);
-            }
-        }
-        for (int i = 1; this.myHeight - i >= 0; i++){
-            if (map[this.myHeight-i][this.myWidth] instanceof Piece && ((Piece)map[this.myHeight-i][this.myWidth]).getColor() == this.getColor()){
-                break;
-            } else {
-                places.add( "" + (this.myHeight-i) + this.myWidth);
-            }
-        }
-        for (int i = 1; this.myWidth + i < 8; i++){
-            if (map[this.myHeight][this.myWidth+i] instanceof Piece && ((Piece)map[this.myHeight][this.myWidth+i]).getColor() == this.getColor()){
-                break;
-            } else {
-                places.add( "" + this.myHeight + (this.myWidth+i));
-            }
-        }
-        for (int i = 1; this.myWidth - i >= 0; i++){
-            if (map[this.myHeight][this.myWidth-i] instanceof Piece && ((Piece)map[this.myHeight][this.myWidth-i]).getColor() == this.getColor()){
-                break;
-            } else {
-                places.add("" +  this.myHeight + (this.myWidth-i) );
-            }
-        }
-        return places;
+        return linearCheck(places, map);
     }
 }

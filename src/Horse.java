@@ -32,7 +32,6 @@ public class Horse extends Piece {
 
     @Override
     ArrayList<String> canWays(JButton[][] map) {
-        ArrayList<String> places = new ArrayList<>();
         if (this.myHeight+1 < 8 && this.myWidth+2 < 8) {
             if (!(map[this.myHeight + 1][this.myWidth + 2] instanceof Piece) || ((Piece) map[this.myHeight + 1][this.myWidth + 2]).getColor() != this.getColor()) {
                 places.add("" + (this.myHeight + 1) + (this.myWidth + 2));

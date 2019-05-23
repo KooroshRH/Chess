@@ -36,7 +36,7 @@ public class Bishop extends Piece {
 
     @Override
     ArrayList<String> canWays(JButton[][] map) {
-        return null;
+        return tiltCheck(places, map);
     }
 
 

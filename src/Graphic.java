@@ -60,7 +60,7 @@ public class Graphic implements MouseListener {
             for (int i = 0; i < 8; i++) {
                 new Soldier(i, 6, true, color, i);
             }
-            new Rook(3, 3, true, color, 9);
+            new Rook(0, 7, true, color, 9);
             new Rook(7, 7, true, color, 16);
             new Horse(1, 7, true, color, 10);
             new Horse(6, 7, true, color, 15);
@@ -101,7 +101,7 @@ public class Graphic implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        boolean moved = false;
+        System.out.println(((JButton)e.getSource()).getBackground() == Color.RED);
         if (!clicked && !(e.getSource() instanceof Piece)){
             System.out.println("nothing");
             return;
@@ -116,40 +116,63 @@ public class Graphic implements MouseListener {
                     int x = Integer.parseInt("" + place.charAt(1));
                     map[y][x].setBackground(Color.RED);
                 }
+                ((Piece)e.getSource()).getPlaces().removeAll(((Piece)e.getSource()).getPlaces());
                 clicked = true;
             } else {
                 System.out.println("not your turn");
             }
-        } else {
+        } else if (((JButton)e.getSource()).getBackground() == Color.RED) {
+            System.out.println("correct");
+            if (clickedPiece instanceof Soldier){
+                System.out.println("seted");
+                ((Soldier)clickedPiece).setFirst(false);
+            }
+            for (int i = 0; i < 8; i++){
+                for (int j = 0; j < 8; j++){
+                    if (map[i][j] == clickedPiece){
+                        JButton btt = new JButton();
+                        btt.addMouseListener(this);
+                        map[i][j] = btt;
+                    }
+                }
+            }
+            if (e.getSource() instanceof Piece) {
+                for (int i = 0; i < 8; i++){
+                    for (int j = 0; j < 8; j++){
+                        if (map[i][j] == e.getSource()){
+                            //TODO exited board
+                            map[i][j] = clickedPiece;
+                            clickedPiece.setMyHeight(i);
+                            clickedPiece.setMyWidth(j);
 
-//            boolean done = false;
-//            System.out.println("sec");
-//            JButton target = (JButton) e.getSource();
-//            for (int i = 0; i < 8; i++){
-//                for (int j = 0; j < 8; j++){
-//                    if (map[i][j] == target){
-//                        done = true;
-//                        System.out.println("secsec");
-//                        if (clickedPiece.move(j, i, map, true)){
-//                            moved = true;
-//                        }
-//                        paint(map, mainPanel);
-//                        break;
-//                    }
-//                }
-//                if (done){
-//                    break;
-//                }
-//            }
-//            if (moved) {
-//                if (turn == 'W') {
-//                    turn = 'B';
-//                } else {
-//                    turn = 'W';
-//                }
-//            }
-//            clickedPiece = null;
-//            clicked = false;
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < 8; i++){
+                    for (int j = 0; j < 8; j++){
+                        if (map[i][j] == e.getSource()){
+                            map[i][j] = clickedPiece;
+                            clickedPiece.setMyHeight(i);
+                            clickedPiece.setMyWidth(j);
+                        }
+                    }
+                }
+            }
+            if (turn == 'W'){
+                turn = 'B';
+            } else {
+                turn = 'W';
+            }
+            clicked = false;
+            clickedPiece = null;
+            paint(map, mainPanel);
+            mainPanel.repaint();
+        } else {
+            clicked = false;
+            clickedPiece = null;
+            paint(map, mainPanel);
+            mainPanel.repaint();
         }
     }
 

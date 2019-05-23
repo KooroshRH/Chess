@@ -36,8 +36,6 @@ public class Queen extends Piece {
 
     @Override
     ArrayList<String> canWays(JButton[][] map) {
-        return null;
+        return tiltCheck(linearCheck(places, map), map);
     }
-
-
 }
