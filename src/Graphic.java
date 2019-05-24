@@ -154,7 +154,15 @@ public class Graphic implements MouseListener {
                 for (int i = 0; i < 8; i++){
                     for (int j = 0; j < 8; j++){
                         if (map[i][j] == e.getSource()){
-                            //TODO exited board
+                            JButton btt = map[i][j];
+                            btt.setBorder(null);
+                            btt.removeMouseListener(this);
+                            btt.setBackground(new Color(139, 94, 25));
+                            if (clickedPiece.getColor() == 'W'){
+                                blackOutPanel.add(btt);
+                            } else {
+                                whiteOutPanel.add(btt);
+                            }
                             map[i][j] = clickedPiece;
                             clickedPiece.setMyHeight(i);
                             clickedPiece.setMyWidth(j);
