@@ -104,14 +104,20 @@ public class Soldier extends Piece {
                     places.add("" + (this.myHeight+i) + (this.myWidth));
                 }
             } else {
-                if (!(map[this.myHeight+1][this.myWidth] instanceof Piece)){
-                    places.add("" + (this.myHeight+1) + (this.myWidth));
-                }
-                if (map[this.myHeight+1][this.myWidth+1] instanceof  Piece && ((Piece) map[this.myHeight+1][this.myWidth+1]).getColor() != this.getColor()){
-                    places.add("" + (this.myHeight+1) + (this.myWidth+1));
-                }
-                if (map[this.myHeight+1][this.myWidth-1] instanceof  Piece && ((Piece) map[this.myHeight+1][this.myWidth-1]).getColor() != this.getColor()){
-                    places.add("" + (this.myHeight+1) + (this.myWidth-1));
+                if (this.myHeight+1 < 8) {
+                    if (!(map[this.myHeight + 1][this.myWidth] instanceof Piece)) {
+                        places.add("" + (this.myHeight + 1) + (this.myWidth));
+                    }
+                    if (this.myWidth + 1 < 8) {
+                        if (map[this.myHeight + 1][this.myWidth + 1] instanceof Piece && ((Piece) map[this.myHeight + 1][this.myWidth + 1]).getColor() != this.getColor()) {
+                            places.add("" + (this.myHeight + 1) + (this.myWidth + 1));
+                        }
+                    }
+                    if (this.myWidth - 1 >= 0) {
+                        if (map[this.myHeight + 1][this.myWidth - 1] instanceof Piece && ((Piece) map[this.myHeight + 1][this.myWidth - 1]).getColor() != this.getColor()) {
+                            places.add("" + (this.myHeight + 1) + (this.myWidth - 1));
+                        }
+                    }
                 }
             }
         } else {
@@ -120,14 +126,20 @@ public class Soldier extends Piece {
                     places.add("" + (this.myHeight-i) + (this.myWidth));
                 }
             } else {
-                if (!(map[this.myHeight-1][this.myWidth] instanceof Piece)){
-                    places.add("" + (this.myHeight-1) + (this.myWidth));
-                }
-                if (map[this.myHeight-1][this.myWidth+1] instanceof  Piece && ((Piece) map[this.myHeight-1][this.myWidth+1]).getColor() != this.getColor()){
-                    places.add("" + (this.myHeight-1) + (this.myWidth+1));
-                }
-                if (map[this.myHeight-1][this.myWidth-1] instanceof  Piece && ((Piece) map[this.myHeight-1][this.myWidth-1]).getColor() != this.getColor()){
-                    places.add("" + (this.myHeight-1) + (this.myWidth-1));
+                if (this.myHeight-1 >= 0) {
+                    if (!(map[this.myHeight - 1][this.myWidth] instanceof Piece)) {
+                        places.add("" + (this.myHeight - 1) + (this.myWidth));
+                    }
+                    if (this.myWidth + 1 < 8) {
+                        if (map[this.myHeight - 1][this.myWidth + 1] instanceof Piece && ((Piece) map[this.myHeight - 1][this.myWidth + 1]).getColor() != this.getColor()) {
+                            places.add("" + (this.myHeight - 1) + (this.myWidth + 1));
+                        }
+                    }
+                    if (this.myWidth - 1 >= 0) {
+                        if (map[this.myHeight - 1][this.myWidth - 1] instanceof Piece && ((Piece) map[this.myHeight - 1][this.myWidth - 1]).getColor() != this.getColor()) {
+                            places.add("" + (this.myHeight - 1) + (this.myWidth - 1));
+                        }
+                    }
                 }
             }
         }

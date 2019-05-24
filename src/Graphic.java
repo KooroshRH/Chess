@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -11,23 +12,36 @@ public class Graphic implements MouseListener {
     private Piece clickedPiece;
     private JFrame mainFrame;
     private JPanel mainPanel;
+    private JPanel whiteOutPanel;
+    private JPanel blackOutPanel;
     private JButton[][] map;
 
     public Graphic(){
         clickedPiece = null;
         mainFrame = new JFrame();
         mainPanel = new JPanel();
+        whiteOutPanel = new JPanel();
+        blackOutPanel = new JPanel();
         map = new JButton[8][8];
         clicked = false;
-        turn = 'B';
+        turn = 'W';
     }
 
     public void game(){
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setSize(new Dimension(700, 700));
+        mainFrame.setSize(new Dimension(500, 700));
         mainFrame.setResizable(false);
+        whiteOutPanel.setBackground(new Color(139, 94, 25));
+        blackOutPanel.setBackground(new Color(139, 94, 25));
+        whiteOutPanel.setPreferredSize(new Dimension(500, 100));
+        blackOutPanel.setPreferredSize(new Dimension(500, 100));
+        mainPanel.setPreferredSize(new Dimension(500, 500));
+        whiteOutPanel.setLayout(new GridLayout(2, 8));
+        blackOutPanel.setLayout(new GridLayout(2, 8));
+        mainFrame.add(whiteOutPanel, BorderLayout.PAGE_START);
         mainFrame.add(mainPanel, BorderLayout.CENTER);
+        mainFrame.add(blackOutPanel, BorderLayout.PAGE_END);
         mainPanel.setLayout(new GridLayout(8, 8));
         makePieces('W');
         makePieces('B');
