@@ -8,6 +8,7 @@ import java.io.File;
 
 public class Graphic implements MouseListener {
     private boolean clicked;
+    private Popup popup;
     private char turn;
     private Piece clickedPiece;
     private JFrame mainFrame;
@@ -15,8 +16,10 @@ public class Graphic implements MouseListener {
     private JPanel whiteOutPanel;
     private JPanel blackOutPanel;
     private JButton[][] map;
+    private JOptionPane pane;
 
     public Graphic(){
+        pane = new JOptionPane();
         clickedPiece = null;
         mainFrame = new JFrame();
         mainPanel = new JPanel();
@@ -210,11 +213,15 @@ public class Graphic implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        if (e.getSource() instanceof Piece) {
+            JLabel text = new JLabel(e.getSource().getClass().getName());
+            popup = PopupFactory.getSharedInstance().getPopup(e.getComponent(), text, e.getXOnScreen(), e.getYOnScreen());
+            popup.show();
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        popup.hide();
     }
 }
