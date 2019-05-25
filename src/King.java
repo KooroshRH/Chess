@@ -35,8 +35,46 @@ public class King extends Piece {
 
     @Override
     ArrayList<String> canWays(JButton[][] map) {
-        return null;
+        if (this.myHeight+1 < 8 && this.myWidth+1 < 8){
+            if (!(map[this.myHeight+1][this.myWidth+1] instanceof Piece)){
+                places.add("" + (this.myHeight+1) + (this.myWidth+1));
+            }
+        }
+        if (this.myHeight-1 >= 0 && this.myWidth+1 < 8){
+            if (!(map[this.myHeight-1][this.myWidth+1] instanceof Piece)){
+                places.add("" + (this.myHeight-1) + (this.myWidth+1));
+            }
+        }
+        if (this.myHeight+1 < 8 && this.myWidth-1 >= 0){
+            if (!(map[this.myHeight+1][this.myWidth-1] instanceof Piece)){
+                places.add("" + (this.myHeight+1) + (this.myWidth-1));
+            }
+        }
+        if (this.myHeight-1 >= 0 && this.myWidth-1 >= 0){
+            if (!(map[this.myHeight-1][this.myWidth-1] instanceof Piece)){
+                places.add("" + (this.myHeight-1) + (this.myWidth-1));
+            }
+        }
+        if (this.myWidth+1 < 8){
+            if (!(map[this.myHeight][this.myWidth+1] instanceof Piece)){
+                places.add("" + (this.myHeight) + (this.myWidth+1));
+            }
+        }
+        if (this.myWidth-1 >= 0){
+            if (!(map[this.myHeight][this.myWidth-1] instanceof Piece)){
+                places.add("" + (this.myHeight) + (this.myWidth-1));
+            }
+        }
+        if (this.myHeight+1 < 8){
+            if (!(map[this.myHeight+1][this.myWidth] instanceof Piece)){
+                places.add("" + (this.myHeight+1) + (this.myWidth));
+            }
+        }
+        if (this.myHeight-1 >= 0){
+            if (!(map[this.myHeight-1][this.myWidth] instanceof Piece)){
+                places.add("" + (this.myHeight-1) + (this.myWidth));
+            }
+        }
+        return places;
     }
-
-
 }

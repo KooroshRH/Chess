@@ -8,8 +8,8 @@ import java.io.File;
 
 public class Graphic implements MouseListener {
     private boolean clicked;
-    private Popup popup;
     private char turn;
+    private boolean crisis;
     private Piece clickedPiece;
     private JFrame mainFrame;
     private JPanel mainPanel;
@@ -28,6 +28,7 @@ public class Graphic implements MouseListener {
         map = new JButton[8][8];
         clicked = false;
         turn = 'W';
+        crisis = false;
     }
 
     public void game(){
@@ -116,15 +117,39 @@ public class Graphic implements MouseListener {
         }
     }
 
+    private void checkKing(){
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                if (map[i][j] instanceof King){
+                    for (Piece piece : Piece.getPieces()){
+                        if (piece.getColor() != ((Piece)map[i][j]).getColor()) {
+                            if (piece.canWays(map).contains("" + ((Piece) map[i][j]).getMyHeight() + ((Piece) map[i][j]).getMyWidth())) {
+                                map[i][j].setBackground(Color.ORANGE);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void finish(char winner){
+        if (winner == 'W') {
+            JOptionPane.showMessageDialog(mainPanel, "White wins!!");
+        } else {
+            JOptionPane.showMessageDialog(mainPanel, "Black wins!!");
+        }
+        System.exit(0);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(((JButton)e.getSource()).getBackground() == Color.RED);
         if (!clicked && !(e.getSource() instanceof Piece)){
             System.out.println("nothing");
             return;
         }
         if (!clicked){
-            System.out.println("first");
+            System.out.println("Now choose where you want to go");
             if (((Piece)e.getSource()).getColor() == turn){
                 ((Piece) e.getSource()).setBackground(Color.GREEN);
                 clickedPiece = (Piece)e.getSource();
@@ -139,9 +164,8 @@ public class Graphic implements MouseListener {
                 System.out.println("not your turn");
             }
         } else if (((JButton)e.getSource()).getBackground() == Color.RED) {
-            System.out.println("correct");
+            System.out.println("Transferred");
             if (clickedPiece instanceof Soldier){
-                System.out.println("seted");
                 ((Soldier)clickedPiece).setFirst(false);
             }
             for (int i = 0; i < 8; i++){
@@ -154,6 +178,14 @@ public class Graphic implements MouseListener {
                 }
             }
             if (e.getSource() instanceof Piece) {
+                System.out.println(e.getSource() instanceof King);
+                if (e.getSource() instanceof King){
+                    if (((Piece)e.getSource()).getColor() == 'W'){
+                        finish('B');
+                    } else {
+                        finish('W');
+                    }
+                }
                 for (int i = 0; i < 8; i++){
                     for (int j = 0; j < 8; j++){
                         if (map[i][j] == e.getSource()){
@@ -193,7 +225,9 @@ public class Graphic implements MouseListener {
             clickedPiece = null;
             paint(map, mainPanel);
             mainPanel.repaint();
+            checkKing();
         } else {
+            System.out.println("Cancelled");
             clicked = false;
             clickedPiece = null;
             paint(map, mainPanel);
@@ -213,15 +247,11 @@ public class Graphic implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if (e.getSource() instanceof Piece) {
-            JLabel text = new JLabel(e.getSource().getClass().getName());
-            popup = PopupFactory.getSharedInstance().getPopup(e.getComponent(), text, e.getXOnScreen(), e.getYOnScreen());
-            popup.show();
-        }
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        popup.hide();
+
     }
 }
