@@ -2,9 +2,13 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
+import java.io.*;
+import java.net.Socket;
+import java.util.Scanner;
 
 public class Graphic implements MouseListener {
     private boolean clicked;
@@ -17,11 +21,15 @@ public class Graphic implements MouseListener {
     private JPanel blackOutPanel;
     private JButton[][] map;
     private JOptionPane pane;
+    private Socket socket;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
+
 
     public Graphic(){
         pane = new JOptionPane();
         clickedPiece = null;
-        mainFrame = new JFrame();
+        mainFrame = new JFrame("Chess");
         mainPanel = new JPanel();
         whiteOutPanel = new JPanel();
         blackOutPanel = new JPanel();
@@ -29,9 +37,16 @@ public class Graphic implements MouseListener {
         clicked = false;
         turn = 'W';
         crisis = false;
+        Socket socket = null;
+        in = null;
+        out = null;
     }
 
-    public void game(){
+    public void game() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        socket = new Socket("127.0.0.1", 8080);
+        in = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
+        out = new ObjectOutputStream(new DataOutputStream(socket.getOutputStream()));
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setSize(new Dimension(500, 700));
