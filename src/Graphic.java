@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Graphic implements MouseListener {
+public class Graphic implements MouseListener, Runnable {
     private boolean clicked;
     private char turn;
     private boolean crisis;
@@ -22,11 +22,12 @@ public class Graphic implements MouseListener {
     private JButton[][] map;
     private JOptionPane pane;
     private Socket socket;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+    private DataOutputStream out;
+    private DataInputStream in;
+    private boolean first;
 
 
-    public Graphic(){
+    public Graphic(char color){
         pane = new JOptionPane();
         clickedPiece = null;
         mainFrame = new JFrame("Chess");
@@ -35,18 +36,18 @@ public class Graphic implements MouseListener {
         blackOutPanel = new JPanel();
         map = new JButton[8][8];
         clicked = false;
-        turn = 'W';
+        turn = color;
         crisis = false;
         Socket socket = null;
         in = null;
         out = null;
+        first = true;
     }
 
-    public void game() throws IOException {
-        Scanner scanner = new Scanner(System.in);
+    public void game() throws IOException, ClassNotFoundException {
         socket = new Socket("127.0.0.1", 8080);
-        in = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
-        out = new ObjectOutputStream(new DataOutputStream(socket.getOutputStream()));
+        in = new DataInputStream(socket.getInputStream());
+        out = new DataOutputStream(socket.getOutputStream());
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setSize(new Dimension(500, 700));
@@ -157,6 +158,61 @@ public class Graphic implements MouseListener {
         System.exit(0);
     }
 
+    public void swap(Piece org, JButton target){
+        System.out.println("Transferred");
+        if (org instanceof Soldier){
+            ((Soldier)org).setFirst(false);
+        }
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                if (map[i][j] == org){
+                    JButton btt = new JButton();
+                    btt.addMouseListener(this);
+                    map[i][j] = btt;
+                }
+            }
+        }
+        if (target instanceof Piece) {
+            System.out.println(target instanceof King);
+            if (target instanceof King){
+                if (((Piece)target).getColor() == 'W'){
+                    finish('B');
+                } else {
+                    finish('W');
+                }
+            }
+            for (int i = 0; i < 8; i++){
+                for (int j = 0; j < 8; j++){
+                    if (map[i][j] == target){
+                        JButton btt = map[i][j];
+                        btt.setBorder(null);
+                        btt.removeMouseListener(this);
+                        btt.setBackground(new Color(139, 94, 25));
+                        if (org.getColor() == 'W'){
+                            blackOutPanel.add(btt);
+                        } else {
+                            whiteOutPanel.add(btt);
+                        }
+                        map[i][j] = org;
+                        org.setMyHeight(i);
+                        org.setMyWidth(j);
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < 8; i++){
+                for (int j = 0; j < 8; j++){
+                    if (map[i][j] == target){
+                        map[i][j] = org;
+                        org.setMyHeight(i);
+                        org.setMyWidth(j);
+                    }
+                }
+            }
+        }
+    }
+
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (!clicked && !(e.getSource() instanceof Piece)){
@@ -179,62 +235,12 @@ public class Graphic implements MouseListener {
                 System.out.println("not your turn");
             }
         } else if (((JButton)e.getSource()).getBackground() == Color.RED) {
-            System.out.println("Transferred");
-            if (clickedPiece instanceof Soldier){
-                ((Soldier)clickedPiece).setFirst(false);
-            }
-            for (int i = 0; i < 8; i++){
-                for (int j = 0; j < 8; j++){
-                    if (map[i][j] == clickedPiece){
-                        JButton btt = new JButton();
-                        btt.addMouseListener(this);
-                        map[i][j] = btt;
-                    }
-                }
-            }
-            if (e.getSource() instanceof Piece) {
-                System.out.println(e.getSource() instanceof King);
-                if (e.getSource() instanceof King){
-                    if (((Piece)e.getSource()).getColor() == 'W'){
-                        finish('B');
-                    } else {
-                        finish('W');
-                    }
-                }
-                for (int i = 0; i < 8; i++){
-                    for (int j = 0; j < 8; j++){
-                        if (map[i][j] == e.getSource()){
-                            JButton btt = map[i][j];
-                            btt.setBorder(null);
-                            btt.removeMouseListener(this);
-                            btt.setBackground(new Color(139, 94, 25));
-                            if (clickedPiece.getColor() == 'W'){
-                                blackOutPanel.add(btt);
-                            } else {
-                                whiteOutPanel.add(btt);
-                            }
-                            map[i][j] = clickedPiece;
-                            clickedPiece.setMyHeight(i);
-                            clickedPiece.setMyWidth(j);
-
-                        }
-                    }
-                }
-            } else {
-                for (int i = 0; i < 8; i++){
-                    for (int j = 0; j < 8; j++){
-                        if (map[i][j] == e.getSource()){
-                            map[i][j] = clickedPiece;
-                            clickedPiece.setMyHeight(i);
-                            clickedPiece.setMyWidth(j);
-                        }
-                    }
-                }
-            }
-            if (turn == 'W'){
-                turn = 'B';
-            } else {
-                turn = 'W';
+            swap(clickedPiece, (JButton) e.getSource());
+            try {
+                out.writeUTF("" + clickedPiece.getMyHeight() + clickedPiece.getMyWidth() + clickedPiece.getID() + clickedPiece.getColor());
+                System.out.println("sent");
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
             clicked = false;
             clickedPiece = null;
@@ -249,7 +255,6 @@ public class Graphic implements MouseListener {
             mainPanel.repaint();
         }
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
 
@@ -268,5 +273,36 @@ public class Graphic implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void run() {
+        String code = null;
+        Piece org = null;
+        JButton target = null;
+        while (true) {
+            try {
+                code = in.readUTF();
+                System.out.println(code);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if (map[i][j] instanceof Piece && ((Piece) map[i][j]).getColor() == code.charAt(3) && ((Piece) map[i][j]).getID() == code.charAt(2)) {
+                        org = (Piece) map[i][j];
+                    }
+                    if (i == code.charAt(0) && j == code.charAt(1)) {
+                        target = map[i][j];
+                    }
+                }
+            }
+            System.out.println(1);
+            swap(org, target);
+            paint(map, mainPanel);
+            mainPanel.repaint();
+            checkKing();
+            System.out.println(2);
+        }
     }
 }

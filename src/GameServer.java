@@ -3,29 +3,57 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class GameServer {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        ServerSocket server = new ServerSocket(8080);
-        Socket white = server.accept();
-        System.out.println("White is in");
-        Socket black = server.accept();
-        System.out.println("Black is in");
+public class GameServer extends Thread {
+    private ServerSocket server;
+    private Socket white;
+    private Socket black;
+    private DataOutputStream outBlack;
+    private DataOutputStream outWhite;
+    private DataInputStream inBlack;
+    private DataInputStream inWhite;
+
+    public GameServer() throws IOException {
+        server = new ServerSocket(8080);
+        outBlack = null;
+        outWhite = null;
+        inBlack = null;
+        inWhite = null;
+        white = null;
+        black = null;
+    }
+
+    @Override
+    public void run() {
+        try {
+            black = server.accept();
+            white = server.accept();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Game Server is Activated");
-        ObjectOutputStream whiteOut = new ObjectOutputStream(new DataOutputStream(white.getOutputStream()));
-        ObjectOutputStream blackOut = new ObjectOutputStream(new DataOutputStream(black.getOutputStream()));
-        ObjectInputStream whiteIn = new ObjectInputStream(new DataInputStream(white.getInputStream()));
-        ObjectInputStream blackIn = new ObjectInputStream(new DataInputStream(black.getInputStream()));
+        try {
+            outWhite = new DataOutputStream(white.getOutputStream());
+            outBlack = new DataOutputStream(black.getOutputStream());
+            inWhite = new DataInputStream(white.getInputStream());
+            inBlack = new DataInputStream(black.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int move = 0;
-        while(white.isClosed() || black.isClosed()){
-            if (move % 2 == 0){
-                JButton[][] map = (JButton[][]) whiteIn.readObject();
-                blackOut.writeObject(map);
-                move++;
-            } else {
-                JButton[][] map = (JButton[][]) blackIn.readObject();
-                whiteOut.writeObject(map);
-                move++;
+        try {
+            while (true) {
+                if (move % 2 == 0) {
+                    String code = inWhite.readUTF();
+                    outBlack.writeUTF(code);
+                    move++;
+                } else {
+                    String code = inBlack.readUTF();
+                    outWhite.writeUTF(code);
+                    move++;
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
