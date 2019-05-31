@@ -15,22 +15,6 @@ public class Horse extends Piece {
     }
 
     @Override
-    boolean move(int width, int height, JButton[][] map, boolean move) {
-        if ((Math.abs(width - this.myWidth) == 2 && Math.abs(height - this.myHeight) == 1) || (Math.abs(width - this.myWidth) == 1 && Math.abs(height - this.myHeight) == 2)){
-            if (move) {
-                return isMoving(width, height, map);
-            } else {
-                return true;
-            }
-        } else {
-            if (move) {
-                System.out.println("This piece can't move to your selected place!!");
-            }
-            return false;
-        }
-    }
-
-    @Override
     ArrayList<String> canWays(JButton[][] map) {
         if (this.myHeight+1 < 8 && this.myWidth+2 < 8) {
             if (!(map[this.myHeight + 1][this.myWidth + 2] instanceof Piece) || ((Piece) map[this.myHeight + 1][this.myWidth + 2]).getColor() != this.getColor()) {

@@ -16,25 +16,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-    boolean move(int width, int height, JButton[][] map, boolean move) {
-        if (Math.abs(this.myWidth -this.myHeight) == Math.abs(width-height)){
-            if (!wayKeeper(width, height, map, true)){
-                return false;
-            }
-            if (move) {
-                return isMoving(width, height, map);
-            } else {
-                return true;
-            }
-        } else {
-            if (move) {
-                System.out.println("This piece can't move to your selected place!!");
-            }
-            return false;
-        }
-    }
-
-    @Override
     ArrayList<String> canWays(JButton[][] map) {
         return tiltCheck(places, map);
     }
