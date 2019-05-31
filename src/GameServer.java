@@ -25,8 +25,8 @@ public class GameServer extends Thread {
     @Override
     public void run() {
         try {
-            black = server.accept();
             white = server.accept();
+            black = server.accept();
         } catch (IOException e) {
             e.printStackTrace();
         }

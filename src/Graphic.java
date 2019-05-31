@@ -13,39 +13,38 @@ import java.util.Scanner;
 public class Graphic implements MouseListener, Runnable {
     private boolean clicked;
     private char turn;
-    private boolean crisis;
     private Piece clickedPiece;
     private JFrame mainFrame;
     private JPanel mainPanel;
     private JPanel whiteOutPanel;
     private JPanel blackOutPanel;
     private JButton[][] map;
-    private JOptionPane pane;
     private Socket socket;
     private DataOutputStream out;
     private DataInputStream in;
-    private boolean first;
 
 
     public Graphic(char color){
-        pane = new JOptionPane();
         clickedPiece = null;
-        mainFrame = new JFrame("Chess");
+        mainFrame = new JFrame();
         mainPanel = new JPanel();
         whiteOutPanel = new JPanel();
         blackOutPanel = new JPanel();
         map = new JButton[8][8];
         clicked = false;
         turn = color;
-        crisis = false;
-        Socket socket = null;
+        socket = null;
         in = null;
         out = null;
-        first = true;
     }
 
     public void game() throws IOException, ClassNotFoundException {
         socket = new Socket("127.0.0.1", 8080);
+        if (turn == 'W'){
+            mainFrame.setTitle("White");
+        } else {
+            mainFrame.setTitle("Black");
+        }
         in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
         mainFrame.setLayout(new BorderLayout());
@@ -237,7 +236,7 @@ public class Graphic implements MouseListener, Runnable {
         } else if (((JButton)e.getSource()).getBackground() == Color.RED) {
             swap(clickedPiece, (JButton) e.getSource());
             try {
-                out.writeUTF("" + clickedPiece.getMyHeight() + clickedPiece.getMyWidth() + clickedPiece.getID() + clickedPiece.getColor());
+                out.writeUTF("" + clickedPiece.getMyHeight() + clickedPiece.getMyWidth() + clickedPiece.getColor() + clickedPiece.getID());
                 System.out.println("sent");
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -289,10 +288,10 @@ public class Graphic implements MouseListener, Runnable {
             }
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    if (map[i][j] instanceof Piece && ((Piece) map[i][j]).getColor() == code.charAt(3) && ((Piece) map[i][j]).getID() == code.charAt(2)) {
+                    if (map[i][j] instanceof Piece && ((Piece) map[i][j]).getColor() == code.charAt(2) && ((Piece) map[i][j]).getID() == Integer.parseInt(code.substring(3))) {
                         org = (Piece) map[i][j];
                     }
-                    if (i == code.charAt(0) && j == code.charAt(1)) {
+                    if (i == Integer.parseInt("" + code.charAt(0)) && j == Integer.parseInt("" + code.charAt(1))) {
                         target = map[i][j];
                     }
                 }
