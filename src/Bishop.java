@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A type of piece that extends the Piece class

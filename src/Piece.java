@@ -1,7 +1,6 @@
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A general class for chess pieces that extends JButton class

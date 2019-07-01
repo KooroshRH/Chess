@@ -1,14 +1,10 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Graphic implements MouseListener, Runnable {
     private boolean clicked;
@@ -38,7 +34,7 @@ public class Graphic implements MouseListener, Runnable {
         out = null;
     }
 
-    public void game() throws IOException, ClassNotFoundException {
+    public void game() throws IOException{
         socket = new Socket("127.0.0.1", 8080);
         if (turn == 'W'){
             mainFrame.setTitle("White");
